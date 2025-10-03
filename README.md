@@ -1,6 +1,6 @@
 # Project 2: Check password
 
-In this exercise you will write a program that determines whether a password is strong enough
+In this project we will write a program that determines whether a password is strong enough
 according to several security rules.
 
 This entire project is to be written using pure Python (no external libraries).
@@ -19,7 +19,7 @@ character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .
 - Reject passwords that are among a small list of commonly used insecure passwords
 such as: "password", "123456", "qwerty", "letmein".
 
-## Contributors
+## Contributors (Group 2)
 - Grace Nzambali KITONYI (Group Leader)
 - Musonda KATAI
 - Tchandikou OUADJA FARE
