@@ -74,7 +74,7 @@ def check_password(password):
 
 st.title("Check password project by Group 2")
 
-password = st.text_input("Enter your password:", type="password")
+password = st.text_input("Enter a password:", type="password")
 
 if password:
     comments = check_password(password)
