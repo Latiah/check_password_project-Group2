@@ -1,9 +1,16 @@
 import streamlit as st
 
 def check_password(password):
-    """Check password
-    input: password 
-    output: list of comments  (if it is  good password or requirements that were not met)   
+    """
+    This function displays true when the password is strong and false when the password is not strong with a list of comments or rules that were not met.
+   
+    Parameters:
+    password 
+
+    Returns:
+    True (If the password is strong.)
+    False (If the password is weak.)
+    List of comments (If the password is not strong it returns a list of rules that were not met.)   
     """
     comments = []  # List to hold comments about password strength
     common_passwords = ["password", "123456", "qwerty", "letmein", "123456789", "12345678", "12345", "qwerty", "qwerty123",
@@ -46,13 +53,13 @@ def check_password(password):
             has_space = True
 
     if not has_upper:
-        comments.append("* Add at least one uppercase letter.")
+        comments.append("* Please include at least one uppercase letter.")
     if not has_lower:
-        comments.append("* Add at least one lowercase letter.")
+        comments.append("* Please include at least one lowercase letter.")
     if not has_digit:
-        comments.append("* Add at least one number.")
+        comments.append("* Please include at least one number.")
     if not has_special:
-        comments.append("* Add at least one special character.")
+        comments.append("* Please include at least one special character.")
     if has_space:
         comments.append("* The password must not contain any spaces.")
     
@@ -69,7 +76,8 @@ def check_password(password):
     if password in common_passwords:
         comments.append("* The password must not be a common password.")
 
-    return comments
+    is_good = len(comments) == 0
+    return is_good, comments
 
 
 st.title("Check password project by Group 2")
@@ -79,9 +87,9 @@ password = st.text_input("Enter a password:", type="password")
 if password:
     comments = check_password(password)
     if not comments:
-        st.success("** This is a strong password. It is valid! **")
+        st.success("Great job! Your password is secure and ready to use. Keep it safe!")
     else:
-        st.error("Weak password. This password is invalid")
+        st.error("Oops your password is weak. Please try again and follow these comments to make it strong.")
         for comment in comments:
             st.write(comment)
         st.info("Please enter a strong password.")
