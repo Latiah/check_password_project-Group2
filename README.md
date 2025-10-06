@@ -20,7 +20,7 @@ character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .
 such as: "password", "123456", "qwerty", "letmein".
 
 ## User interface for the project
-Hosted on streamlit: <a href="https://check-password-group2.streamlit.app/"> Check password project by Group 2</a>
+Hosted on streamlit: <a href="https://check-password-group2.streamlit.app/" target="_blank"> Check password project by Group 2</a>
 ## Contributors (Group 2)
 - Grace Nzambali KITONYI (Group Leader)
 - Musonda KATAI
