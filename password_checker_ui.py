@@ -1,5 +1,34 @@
 import streamlit as st
 
+# --- Custom CSS for styling ---
+st.markdown("""
+    <style>
+    body {
+        background-color: #f0f2f6;
+        color: #333333;
+    }
+    .password-title {
+        color: #4B0082;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .success {
+        color: #2E8B57;
+        font-weight: bold;
+    }
+    .error {
+        color: #B22222;
+        font-weight: bold;
+    }
+    .comment {
+        margin-left: 20px;
+        color: #555555;
+        font-style: italic;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 def check_password(password):
     """
     This function displays true when the password is strong and false when the password is not strong with a list of comments or rules that were not met.
@@ -29,15 +58,16 @@ def check_password(password):
     "p@ssw0rd", "pa$$w0rd", "passw0rd", "password!", "password01", "welcome1",
     "admin1", "admin01", "login123", "letmein1"]
 
+    # --- Length Check ---
     if len(password) < 8 or len(password) > 64:
         comments.append("* The password should be at least 8 characters long and at most 64 characters long.")
 
+    # --- Character Types ---
     has_upper = False
     has_lower = False
     has_digit = False
     has_special = False
     has_space = False
-
     special_characters = "!@#$%^&*()-_+={}[]:;,<.>?/\\|`"
 
     for char in password:
@@ -63,32 +93,36 @@ def check_password(password):
     if has_space:
         comments.append("* The password must not contain any spaces.")
     
+    # --- Entirely Alphabetic or Numeric ---
     if password.isalpha():
         comments.append("* The password must not be entirely alphabetic.")
     if password.isdigit():
         comments.append("* The password must not be entirely numeric.")
 
+    # --- Repeated Characters ---
     for i in range(len(password) - 2):
         if password[i] == password[i+1] == password[i+2]:
             comments.append("* The password must not contain 3 or more identical consecutive characters or numbers.")
             break  
 
+    # --- Common Passwords Check ---
     if password in common_passwords:
         comments.append("* The password must not be a common password.")
 
     return comments
 
 
-st.title("Check password project by Group 2")
+# --- Streamlit UI ---
+st.markdown('<div class="password-title">🔒 Password Strength Checker</div>', unsafe_allow_html=True)
 
-password = st.text_input("Enter a password:", type="password")
+password = st.text_input("Enter your password here:", type="password")
 
 if password:
     observations = check_password(password)
     if not observations:
-        st.success("Great job! Your password is secure and ready to use. Keep it safe!")
+        st.markdown('<p class="success">✅ Great job! Your password is strong and ready to use. Keep it safe!</p>', unsafe_allow_html=True)
     else:
-        st.error("Oops your password is weak. Please try again and follow these comments to make it strong.")
+        st.markdown('<p class="error">⚠️ Oops! Your password is weak. Follow the tips below:</p>', unsafe_allow_html=True)
         for comment in observations:
-            st.write(comment)
-        st.info("Please enter a strong password.")
+            st.markdown(f'<p class="comment">• {comment}</p>', unsafe_allow_html=True)
+        st.info("💡 Tip: Use a mix of letters, numbers, and symbols to create a stronger password.")
