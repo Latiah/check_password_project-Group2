@@ -19,6 +19,9 @@ character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .
 - Reject passwords that are among a small list of commonly used insecure passwords
 such as: "password", "123456", "qwerty", "letmein".
 
+## Common passwords used
+<a href= "https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt">Common passwords</a>
+
 ## User interface for the project
 Hosted on streamlit: <a href="https://check-password-group2.streamlit.app/" target="_blank"> Check password project by Group 2</a>
 ## Contributors (Group 2)
