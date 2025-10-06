@@ -76,8 +76,7 @@ def check_password(password):
     if password in common_passwords:
         comments.append("* The password must not be a common password.")
 
-    is_good = len(comments) == 0
-    return is_good, comments
+    return comments
 
 
 st.title("Check password project by Group 2")
@@ -85,11 +84,11 @@ st.title("Check password project by Group 2")
 password = st.text_input("Enter a password:", type="password")
 
 if password:
-    comments = check_password(password)
-    if not comments:
+    observations = check_password(password)
+    if not observations:
         st.success("Great job! Your password is secure and ready to use. Keep it safe!")
     else:
         st.error("Oops your password is weak. Please try again and follow these comments to make it strong.")
-        for comment in comments:
+        for comment in observations:
             st.write(comment)
         st.info("Please enter a strong password.")
