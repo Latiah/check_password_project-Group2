@@ -9,7 +9,7 @@ This entire project is to be written using pure Python (no external libraries).
 #### 1. A good password must:
 - Be at least 8 characters long and at most 64 characters.
 - Contain at least one uppercase letter, one lowercase letter, one digit, and one special
-character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .
+character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .)
 - Not contain any spaces.
   
 #### 2. For additional complexity:
@@ -20,7 +20,7 @@ character (special characters are any of: !@#$%ˆ&*()-_+=[]{};:’",<.>/?\|‘ .
 such as: "password", "123456", "qwerty", "letmein".
 
 ## User interface for the project
-<a href="https://check-password-group2.streamlit.app/">
+Hosted on streamlit: <a href="https://check-password-group2.streamlit.app/"> Check password project by Group 2</a>
 ## Contributors (Group 2)
 - Grace Nzambali KITONYI (Group Leader)
 - Musonda KATAI
