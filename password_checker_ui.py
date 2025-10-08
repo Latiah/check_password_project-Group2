@@ -79,7 +79,7 @@ st.markdown("""
         .logo {
             display: block;
             margin: 0 auto;
-            width: 300px;
+            width: 400px;
             border-radius: 12px;
             animation: fadeIn 2s ease-in;
             margin-bottom: 15px;
