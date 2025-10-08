@@ -97,13 +97,29 @@ st.markdown("""
         }
 
         .suggestion-box {
-            background: #1e293b;
-            color: #93c5fd;
-            border-left: 4px solid #38bdf8;
-            border-radius: 10px;
-            padding: 10px;
             margin-top: 10px;
         }
+
+        div[data-testid="stExpander"] div[role="button"] p {
+            font-size: 1.05rem;
+            color: #93c5fd !important;
+        }
+
+        .suggestion-btn {
+            background-color: #1e293b;
+            color: #93c5fd;
+            border: 1px solid #38bdf8;
+            border-radius: 8px;
+            padding: 8px 16px;
+            margin: 5px;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+        .suggestion-btn:hover {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+
     </style>
 """, unsafe_allow_html=True)
 
@@ -154,13 +170,17 @@ def generate_strong_passwords():
 
 # ---------- UI HEADER ----------
 st.markdown("""
-    <img src="https://github.com/gracekitonyi-bit/gracekitonyi-bit-daily-reports/blob/main/AIMS_Logo.jpeg?raw=true" class="logo"/>
+    <img src="https://github.com/Latiah/check_password_project-Group2/blob/main/aimslogo.jpg?raw=true" class="logo"/>
     <h1>🔐 Password Strength Checker</h1>
     <div class="subtitle">An Interactive Project by <b>Group 2</b> — AIMS 2025</div>
 """, unsafe_allow_html=True)
 
+# ---------- SESSION STATE ----------
+if "password" not in st.session_state:
+    st.session_state.password = ""
+
 # ---------- USER INPUT ----------
-password = st.text_input("Enter your password:", type="password", help="Try typing a password to see how strong it is")
+password = st.text_input("Enter your password:", value=st.session_state.password, type="password", help="Try typing a password to see how strong it is")
 
 if password:
     with st.spinner("Analyzing password strength... 🔍"):
@@ -195,9 +215,11 @@ if password:
 
         # Clickable Tab for Suggestions
         with st.expander("💡 View Strong Password Suggestions"):
-            st.markdown("Try these for inspiration 👇")
+            st.markdown("Click on a suggestion below to auto-fill 👇")
             for suggestion in generate_strong_passwords():
-                st.markdown(f"<div class='suggestion-box'>{suggestion}</div>", unsafe_allow_html=True)
+                if st.button(suggestion, key=suggestion, use_container_width=True):
+                    st.session_state.password = suggestion
+                    st.rerun()
 
     if strength < 50:
         st.error("Password Strength: Weak ⚠️")
@@ -207,7 +229,7 @@ if password:
         st.success("Password Strength: Strong ✅")
 
 else:
-    st.info("👆 Enter a password to check its strength and get instant feedback.")
+    st.info("👆 Enter a password or choose one from the suggestions below.")
 
 # ---------- QR CODE ----------
 st.markdown("""
