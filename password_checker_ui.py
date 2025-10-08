@@ -35,7 +35,21 @@ st.markdown("""
 # ---------- PASSWORD CHECK FUNCTION ----------
 def check_password(password):
     comments = []
-    common_passwords = ["password", "123456", "qwerty", "letmein", "admin", "welcome", "root", "guest", "football", "dragon"]
+    common_passwords = ["password", "123456", "qwerty", "letmein", "123456789", "12345678", "12345", "qwerty", "qwerty123",
+    "111111", "123123", "abc123", "password1", "iloveyou", "000000", "letmein",
+    "monkey", "dragon", "sunshine", "football", "admin", "welcome", "login",
+    "princess", "solo", "starwars", "baseball", "hello", "freedom", "whatever",
+    "trustno1", "654321", "superman", "asdfghjkl", "pokemon", "liverpool",
+    "charlie", "computer", "michelle", "jordan", "tigger", "purple", "ginger",
+    "summer", "ashley", "buster", "hannah", "michael", "daniel", "hunter",
+    "shadow", "minecraft", "qwertyuiop", "qazwsx", "qwert", "qwe123", "qweasd",
+    "1q2w3e4r", "1qaz2wsx", "12qwaszx", "q1w2e3r4", "zaq12wsx", "zaq12wsxc",
+    "admin123", "welcome123", "password123", "letmein123", "pass123", "secret",
+    "default", "root", "user", "guest", "oracle", "mysql", "postgres",
+    "11111111", "aaaaaa", "abc12345", "abc123456", "qwerty1", "qwerty12", "qwerty1234",
+    "qwerty!", "1234567", "987654321", "696969", "football1", "monkey1", "dragon1",
+    "p@ssw0rd", "pa$$w0rd", "passw0rd", "password!", "password01", "welcome1",
+    "admin1", "admin01", "login123", "letmein1"]
 
     if len(password) < 8 or len(password) > 64:
         comments.append("🔸 Must be between 8–64 characters long.")
