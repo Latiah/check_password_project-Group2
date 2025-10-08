@@ -192,12 +192,14 @@ if password:
     strength = max(strength, 0)
 
     # Color-coded progress bar
+  if len(comments) == 0:
+    st.success("Password Strength: Strong ✅")
+else:
     if strength < 50:
-        color = "red"
+        st.error("Password Strength: Weak ⚠️")
     elif strength < 80:
-        color = "orange"
-    else:
-        color = "green"
+        st.info("Password Strength: Moderate 🟡")
+
 
     st.markdown(f"""
         <div style="background-color:#1e293b; border-radius:10px; padding:5px;">
