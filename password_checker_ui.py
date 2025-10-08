@@ -2,10 +2,10 @@ import streamlit as st
 import random
 import time
 
-# ---------- Page Setup ----------
+# ---------- PAGE SETUP ----------
 st.set_page_config(page_title="Password Strength Checker — Group 2", page_icon="🔐", layout="centered")
 
-# ---------- Custom Styling ----------
+# ---------- CUSTOM STYLING ----------
 st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -79,8 +79,9 @@ st.markdown("""
         .logo {
             display: block;
             margin: 0 auto;
-            width: 300px;
-            border-radius: 12px;
+            width: 95%;
+            max-width: 700px;
+            border-radius: 10px;
             animation: fadeIn 2s ease-in;
             margin-bottom: 15px;
         }
@@ -101,12 +102,12 @@ st.markdown("""
             border-left: 4px solid #38bdf8;
             border-radius: 10px;
             padding: 10px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# ---------- Password Check Function ----------
+# ---------- PASSWORD CHECK FUNCTION ----------
 def check_password(password):
     comments = []
     common_passwords = ["password", "123456", "qwerty", "letmein", "admin", "welcome", "root", "guest", "football", "dragon"]
@@ -141,7 +142,7 @@ def check_password(password):
 
     return comments
 
-# ---------- Suggest Strong Passwords ----------
+# ---------- STRONG PASSWORD SUGGESTIONS ----------
 def generate_strong_passwords():
     words = ["Sky", "River", "Quantum", "Matrix", "Secure", "Flame", "Orbit", "Pulse", "Vertex", "Nova"]
     symbols = ["@", "#", "$", "%", "&", "*"]
@@ -151,13 +152,14 @@ def generate_strong_passwords():
         suggestions.append(password)
     return suggestions
 
-# ---------- UI Layout ----------
+# ---------- UI HEADER ----------
 st.markdown("""
     <img src="https://github.com/gracekitonyi-bit/gracekitonyi-bit-daily-reports/blob/main/AIMS_Logo.jpeg?raw=true" class="logo"/>
     <h1>🔐 Password Strength Checker</h1>
-    <div class="subtitle">A Group 2 Project — Presented at AIMS 2025</div>
+    <div class="subtitle">An Interactive Project by <b>Group 2</b> — AIMS 2025</div>
 """, unsafe_allow_html=True)
 
+# ---------- USER INPUT ----------
 password = st.text_input("Enter your password:", type="password", help="Try typing a password to see how strong it is")
 
 if password:
@@ -168,7 +170,19 @@ if password:
     strength = 100 - (len(observations) * 15)
     strength = max(strength, 0)
 
-    st.progress(strength / 100)
+    # Color-coded progress bar
+    if strength < 50:
+        color = "red"
+    elif strength < 80:
+        color = "orange"
+    else:
+        color = "green"
+
+    st.markdown(f"""
+        <div style="background-color:#1e293b; border-radius:10px; padding:5px;">
+            <div style="width:{strength}%; background-color:{color}; height:15px; border-radius:8px;"></div>
+        </div>
+    """, unsafe_allow_html=True)
 
     if not observations:
         st.markdown("<div class='success-box fade-in'>🎉 Excellent! Your password is strong, secure, and ready to use. Great job!</div>", unsafe_allow_html=True)
@@ -177,13 +191,13 @@ if password:
         for comment in observations:
             st.markdown(f"<div class='comment-box'>{comment}</div>", unsafe_allow_html=True)
 
-        # Motivational Message
-        st.warning("💡 Don’t worry — even experts refine their passwords! Try again and make it stronger 💪")
+        st.warning("💡 Don’t worry — even experts refine their passwords! You’re learning to stay secure 💪")
 
-        # Suggested strong passwords
-        st.markdown("<div class='suggestion-box'><b>Try these ideas for strong passwords:</b></div>", unsafe_allow_html=True)
-        for suggestion in generate_strong_passwords():
-            st.markdown(f"<div class='suggestion-box'>{suggestion}</div>", unsafe_allow_html=True)
+        # Clickable Tab for Suggestions
+        with st.expander("💡 View Strong Password Suggestions"):
+            st.markdown("Try these for inspiration 👇")
+            for suggestion in generate_strong_passwords():
+                st.markdown(f"<div class='suggestion-box'>{suggestion}</div>", unsafe_allow_html=True)
 
     if strength < 50:
         st.error("Password Strength: Weak ⚠️")
@@ -195,7 +209,7 @@ if password:
 else:
     st.info("👆 Enter a password to check its strength and get instant feedback.")
 
-# ---------- QR Code ----------
+# ---------- QR CODE ----------
 st.markdown("""
     <div class="qr-section">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://check-password-group2.streamlit.app" width="180">
@@ -203,7 +217,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# ---------- Footer ----------
+# ---------- FOOTER ----------
 st.markdown("""
     <div class="footer">
         Made with ❤️ by <b>Group 2</b> | AIMS 2025 Presentation
