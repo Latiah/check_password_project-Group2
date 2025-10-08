@@ -192,7 +192,8 @@ if password:
     strength = max(strength, 0)
 
     # Color-coded progress bar
-  if len(comments) == 0:
+  # Evaluate password strength
+if len(comments) == 0:
     st.success("Password Strength: Strong ✅")
 else:
     if strength < 50:
