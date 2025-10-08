@@ -82,7 +82,7 @@ st.markdown("""
             width: 300px;
             border-radius: 12px;
             animation: fadeIn 2s ease-in;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .qr-section {
