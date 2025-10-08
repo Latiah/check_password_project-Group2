@@ -1,94 +1,132 @@
 import streamlit as st
+import time
 
+# ---------- Page Configuration ----------
+st.set_page_config(page_title="Password Strength Checker", page_icon="🔐", layout="centered")
+
+# ---------- Custom CSS Styling ----------
+st.markdown("""
+    <style>
+        body {
+            background: linear-gradient(120deg, #0f172a, #1e293b, #334155);
+            color: white;
+        }
+        .main {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            font-family: 'Poppins', sans-serif;
+        }
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .comment-box {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: #fca5a5;
+            border-left: 4px solid #ef4444;
+        }
+        .success-box {
+            background: #064e3b;
+            padding: 15px;
+            border-radius: 10px;
+            color: #bbf7d0;
+            border-left: 4px solid #22c55e;
+        }
+        .progress-container {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# ---------- Password Check Function ----------
 def check_password(password):
-    """
-    This function displays true when the password is strong and false when the password is not strong with a list of comments or rules that were not met.
-   
-    Parameters:
-    password 
-
-    Returns:
-    True (If the password is strong.)
-    False (If the password is weak.)
-    List of comments (If the password is not strong it returns a list of rules that were not met.)   
-    """
-    comments = []  # List to hold comments about password strength
-    common_passwords = ["password", "123456", "qwerty", "letmein", "123456789", "12345678", "12345", "qwerty", "qwerty123",
-    "111111", "123123", "abc123", "password1", "iloveyou", "000000", "letmein",
-    "monkey", "dragon", "sunshine", "football", "admin", "welcome", "login",
-    "princess", "solo", "starwars", "baseball", "hello", "freedom", "whatever",
-    "trustno1", "654321", "superman", "asdfghjkl", "pokemon", "liverpool",
-    "charlie", "computer", "michelle", "jordan", "tigger", "purple", "ginger",
-    "summer", "ashley", "buster", "hannah", "michael", "daniel", "hunter",
-    "shadow", "minecraft", "qwertyuiop", "qazwsx", "qwert", "qwe123", "qweasd",
-    "1q2w3e4r", "1qaz2wsx", "12qwaszx", "q1w2e3r4", "zaq12wsx", "zaq12wsxc",
-    "admin123", "welcome123", "password123", "letmein123", "pass123", "secret",
-    "default", "root", "user", "guest", "oracle", "mysql", "postgres",
-    "11111111", "aaaaaa", "abc12345", "abc123456", "qwerty1", "qwerty12", "qwerty1234",
-    "qwerty!", "1234567", "987654321", "696969", "football1", "monkey1", "dragon1",
-    "p@ssw0rd", "pa$$w0rd", "passw0rd", "password!", "password01", "welcome1",
-    "admin1", "admin01", "login123", "letmein1"]
+    comments = []
+    common_passwords = [
+        "password", "123456", "qwerty", "letmein", "admin", "welcome", "root", "guest", "football", "dragon"
+    ]
 
     if len(password) < 8 or len(password) > 64:
-        comments.append("* The password should be at least 8 characters long and at most 64 characters long.")
+        comments.append("🔸 Must be between 8–64 characters.")
 
-    has_upper = False
-    has_lower = False
-    has_digit = False
-    has_special = False
-    has_space = False
-
-    special_characters = "!@#$%^&*()-_+={}[]:;,<.>?/\\|`"
-
-    for char in password:
-        if char.isupper():
-            has_upper = True
-        elif char.islower():
-            has_lower = True
-        elif char.isdigit():
-            has_digit = True
-        elif char in special_characters:
-            has_special = True
-        elif char.isspace():
-            has_space = True
+    has_upper = any(c.isupper() for c in password)
+    has_lower = any(c.islower() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    has_special = any(c in "!@#$%^&*()-_+=<>?/\\|{}[]:;" for c in password)
+    has_space = any(c.isspace() for c in password)
 
     if not has_upper:
-        comments.append("* Please include at least one uppercase letter.")
+        comments.append("🔸 Add at least one uppercase letter.")
     if not has_lower:
-        comments.append("* Please include at least one lowercase letter.")
+        comments.append("🔸 Add at least one lowercase letter.")
     if not has_digit:
-        comments.append("* Please include at least one number.")
+        comments.append("🔸 Add at least one number.")
     if not has_special:
-        comments.append("* Please include at least one special character.")
+        comments.append("🔸 Add at least one special character (!@#$%^&*).")
     if has_space:
-        comments.append("* The password must not contain any spaces.")
-    
-    if password.isalpha():
-        comments.append("* The password must not be entirely alphabetic.")
-    if password.isdigit():
-        comments.append("* The password must not be entirely numeric.")
+        comments.append("🔸 Remove spaces.")
+
+    if password in common_passwords:
+        comments.append("🔸 Avoid using common passwords.")
 
     for i in range(len(password) - 2):
         if password[i] == password[i+1] == password[i+2]:
-            comments.append("* The password must not contain 3 or more identical consecutive characters or numbers.")
-            break  
-
-    if password in common_passwords:
-        comments.append("* The password must not be a common password.")
+            comments.append("🔸 Avoid 3 or more identical consecutive characters.")
+            break
 
     return comments
 
+# ---------- UI Section ----------
+st.markdown("<h1>🔐 Password Strength Checker</h1>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>A Cybersecurity project by <b>Group 2</b><br>Securing Digital Identities with Strong Passwords</div>", unsafe_allow_html=True)
 
-st.title("Check password project by Group 2")
-
-password = st.text_input("Enter a password:", type="password")
+password = st.text_input("Enter your password:", type="password")
 
 if password:
+    with st.spinner("Analyzing password strength..."):
+        time.sleep(1)
+
     observations = check_password(password)
+    strength = 100 - (len(observations) * 15)
+    strength = max(strength, 0)
+
+    # Strength bar visualization
+    st.progress(strength / 100)
+
     if not observations:
-        st.success("Great job! Your password is secure and ready to use. Keep it safe!")
+        st.markdown("<div class='success-box'>✅ Excellent! Your password is strong and secure. Keep it safe!</div>", unsafe_allow_html=True)
     else:
-        st.error("Oops your password is weak. Please try again and follow these comments to make it strong.")
+        st.markdown("<div class='comment-box'>⚠️ Weak password! Please review the feedback below:</div>", unsafe_allow_html=True)
         for comment in observations:
-            st.write(comment)
-        st.info("Please enter a strong password.")
+            st.markdown(f"<div class='comment-box'>{comment}</div>", unsafe_allow_html=True)
+
+    if strength < 50:
+        st.warning("Password strength: Weak ⚠️")
+    elif strength < 80:
+        st.info("Password strength: Moderate 🟡")
+    else:
+        st.success("Password strength: Strong ✅")
+
+else:
+    st.info("👆 Please enter a password to analyze.")
+
+# ---------- Footer ----------
+st.markdown("""
+    <hr>
+    <div style="text-align:center; color:#94a3b8;">
+        Made with ❤️ by <b>Group 2</b> | Cybersecurity Project 2025
+    </div>
+""", unsafe_allow_html=True)
