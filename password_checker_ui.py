@@ -144,7 +144,7 @@ def check_password(password):
     if not has_digit:
         comments.append("🔸 Add at least one number.")
     if not has_special:
-        comments.append("🔸 Add at least one special character ('!@#$%ˆ&*()-_+=[]{};:’",<.>/?|‘ .)"')
+        comments.append("🔸 Add at least one special character (!@#$%ˆ&*()-_+=[]{};:’",<.>/?|‘ .)")
     if has_space:
         comments.append("🔸 Remove spaces — they weaken the password.")
 
