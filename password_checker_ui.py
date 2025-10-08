@@ -78,11 +78,11 @@ st.markdown("""
 
         .logo {
             display: block;
-            margin: 2 auto;
+            margin: 0 auto;
             width: 300px;
             border-radius: 12px;
             animation: fadeIn 2s ease-in;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .qr-section {
